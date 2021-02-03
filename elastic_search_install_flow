@@ -23,3 +23,8 @@ Step 4 — Testing Elasticsearch
 By now, Elasticsearch should be running on port 9200. You can test it with cURL and a GET request.
 
 curl -X GET 'http://localhost:9200'
+
+
+Product.__elasticsearch__.delete_index! for index deletion.
+Product.import force: true index creation.
+sudo systemctl start elasticsearch.service  elastic search service start.
