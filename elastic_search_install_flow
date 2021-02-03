@@ -1,0 +1,25 @@
+url  :  https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-ubuntu-20-04
+
+Prerequisites
+Before following this tutorial, you will need:
+
+An Ubuntu 20.04 server with 4GB RAM and 2 CPUs set up with a non-root sudo user. You can achieve this by following the Initial Server Setup with Ubuntu 20.04
+OpenJDK 11 installed
+
+curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+sudo apt update
+sudo apt install elasticsearch
+
+
+Start the Elasticsearch service with systemctl. Give Elasticsearch a few moments to start up. Otherwise, you may get errors about not being able to connect.
+
+sudo systemctl start elasticsearch
+Next, run the following command to enable Elasticsearch to start up every time your server boots:
+
+sudo systemctl enable elasticsearch
+
+Step 4 — Testing Elasticsearch
+By now, Elasticsearch should be running on port 9200. You can test it with cURL and a GET request.
+
+curl -X GET 'http://localhost:9200'
