@@ -1,0 +1,14 @@
+mysql database quries on ubuntu dirctly
+mysql -u root -p
+displaying tables run this one command
+SHOW DATABASES;
+displaying specific data base run this one
+USE vectricity_db;
+displaying all tables selected database run this one
+SHOW TABLES;
+displaying all attributes of slected table run this one
+SHOW TABLES LIKE 'table_name';
+displaying all attributes of slected table run this one
+DESCRIBE table_name;
+displaying all inserted records of slected table run this one
+SELECT * FROM table_name;
