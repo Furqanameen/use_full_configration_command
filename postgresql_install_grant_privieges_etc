@@ -8,6 +8,13 @@ CREATE DATABASE yourdbname;
 CREATE USER youruser WITH ENCRYPTED PASSWORD 'yourpass';
 GRANT ALL PRIVILEGES ON DATABASE yourdbname TO youruser;
 
+================================================================== Simple WAY TO CREATE SUPER USER AND GRANT PRIVILAGES ETC  ==================================================================
+CREATE ROLE instalane WITH SUPERUSER CREATEDB CREATEROLE LOGIN ENCRYPTED PASSWORD 'pass_instalane';
+ALTER ROLE instalane PASSWORD 'pass_instalane';
+GRANT CONNECT ON DATABASE my_db TO my_user;
+
+=================================================================             ==========================================================================
+
 To make a user a SuperUser: ALTER USER username WITH SUPERUSER;
 PostgreSQL - How to grant access to users?
 April 11, 2018
