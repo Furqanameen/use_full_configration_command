@@ -1,0 +1,4 @@
+https://www.codegrepper.com/code-examples/whatever/ngrok+invalid+host+header
+
+example  
+ngrok http -host-header=rewrite http://lvh.me:3000
