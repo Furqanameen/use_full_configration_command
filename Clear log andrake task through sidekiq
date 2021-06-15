@@ -1,0 +1,21 @@
+gem 'whenever'
+
+bundle install
+
+then create a rake task 
+
+lib/tasks/weekly_log.rake
+namespace :weekly do
+  desc 'Clear the Log'
+  task clear_log: :environment do
+    puts "=================    Log cleared =============================="
+    Rails.logger.flush
+  end
+end
+
+after that call this rake task from schdule.rb 
+
+config/schedule.rb
+every 1.week do
+  rake "weekly:clear_log"
+end
