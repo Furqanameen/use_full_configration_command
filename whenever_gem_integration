@@ -1,0 +1,29 @@
+Whenever gem procedure 
+
+gem 'whenever'
+bundle install
+
+create a file if not exist in config/schedule.rb
+
+set :environment, "development"
+every 1.week do
+	your code and functionality
+  rake "weekly:clear_log"
+end
+
+Run task twice a day:
+every :day, at: ["12:00 AM", "12:00 PM"] do
+  command "rm tmp/testing.txt"
+end
+
+Remember to run the "whenever --update-crontab" command every time you make changes!
+You can also use this command:
+whenever --update-crontab --set environment=development
+
+You should be able to see your new entry with crontab -l
+
+Once you have tasks in your crontab file (check with crontab -l) you’re ready to go.
+
+to kill all cron job from your machine run this command crontab -r
+
+link: https://www.rubyguides.com/2019/04/ruby-whenever-gem/
