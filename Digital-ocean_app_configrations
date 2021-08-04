@@ -1,0 +1,168 @@
+=================SHH Connectivity Issue============
+If you are still having issue in access from your local computer 
+
+1- Log as root to your Ubuntu server
+
+2- edit the file by using nano /etc/ssh/sshd_config 
+ Use vim or nano to edit the contents of /etc/ssh/sshd_config
+3- Eg. vi /etc/ssh/sshd_config or nano /etc/ssh/sshd_config
+4- Now go to the very bottom of the file (to the line with PasswordAuthentication) - Change the value next to PasswordAuthentication from no to yes.
+It should now look like this:
+
+# Change to no to disable tunnelled clear text passwords
+PasswordAuthentication yes
+
+5- Save the file and then run the following command to reload the SSH config:
+6- sudo service sshd reload
+7- Try ssh root@your-ip-address #	138.197.139.46
+=====================================
+
+MYSQL Root 
+
+username: root 
+password: 
+
+====================================
+
+Create ssh Keys Additional if Account is already added in bitbucket Follow the link
+
+https://support.atlassian.com/bitbucket-cloud/docs/set-up-additional-ssh-keys/
+
+ssh-keygen -f ~/.ssh/<username>
+ssh-add ~/.ssh/<username> 
+cat ~/.ssh/<username.pub> # Copy the public key
+
+==========================================================
+
+Install Nginx on ubuntu VPS
+
+sudo apt update
+sudo apt install nginx
+sudo ufw app list
+sudo ufw allow 'Nginx HTTP'
+sudo ufw status
+if status is inactive run this one #sudo ufw enable
+
+systemctl status nginx
+
+Output should be like below 
+--->
+Output
+● nginx.service - A high performance web server and a reverse proxy server
+   Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2018-04-20 16:08:19 UTC; 3 days ago
+
+http://your_server_ip #
+
+to Stop:  sudo systemctl stop nginx
+to Start: sudo systemctl start nginx
+to reStart: sudo systemctl restart nginx
+to reStart: sudo systemctl restart nginx
+
+on every Configuration you add in system Run
+
+sudo nginx -t
+
+it should show OK! Successfull something like that
+=====================================================================================================================================================
+
+Create config/nginx.conf in the Project 
+==========================================================
+upstream puma {
+  server unix:///home/username/apps/appname/shared/tmp/sockets/appname-puma.sock;
+}
+
+server {
+  listen 80 default_server deferred;
+  # server_name example.com;
+
+  root /home/username/apps/appname/current/public;
+  access_log /home/username/apps/appname/current/log/nginx.access.log;
+  error_log /home/username/apps/appname/current/log/nginx.error.log info;
+
+  location ^~ /assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  try_files $uri/index.html $uri @puma;
+  location @puma {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+
+    proxy_pass http://puma;
+    
+    # These below lines are added fro ssl configrations and commented above three line     
+    proxy_set_header  Host $host;
+    proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header  X-Forwarded-Proto $scheme;
+    proxy_set_header  X-Forwarded-Ssl on; # Optional
+    proxy_set_header  X-Forwarded-Port $server_port;
+    proxy_set_header  X-Forwarded-Host $host;
+  }
+
+  error_page 500 502 503 504 /500.html;
+  client_max_body_size 10M;
+  keepalive_timeout 10;
+}
+=====================================================
+Now Edit enable the nginx.conf file from project 
+=====================================================
+
+Set symbolink links with this command
+
+sudo rm /etc/nginx/sites-enabled/default
+=========================================== If site is deployed with capistrano ======================
+sudo ln -nfs /home/deployer/apps/smile/current/config/nginx.conf /etc/nginx/sites-enabled/smile
+sudo ln -nfs /home/deployer/apps/solar/current/config/nginx.conf /etc/nginx/sites-enabled/solar
+
+======================================== Iddeployment is done by noraml way (means withput capistrano) ==================
+sudo ln -nfs /home/deployer/solar_system/config/nginx_normal.conf /etc/nginx/sites-enabled/solar
+
+if you want to remove symbolink link run below command with path for which you want to do 
+rm -i /etc/nginx/sites-enabled/solar
+
+to see symbolink run below command 
+
+ls -ls /etc/nginx/sites-enabled/
+========================= out put =============================
+total 0
+0 lrwxrwxrwx 1 root root 51 May 24 20:50 smile -> /home/deployer/apps/smile/current/config/nginx.conf
+=========================================================================================================================
+            How to run Puma as a demon:
+======================================================================================================================== 
+
+http://blog.andolasoft.com/2013/06/how-to-configure-rails-application-with-puma-and-ngnix-on-centos.html
+
+1. If you want to run puma as a foreground process (daemon) then start puma with –d option with the following command
+RAILS_ENV=production bundle exec puma -e production -d -b unix:///home/deployer/appname/tmp/sockets/puma.sock
+
+2.To verify whether puma is running or not we have to issue the below command
+ps aux | grep puma
+sudo service nginx start
+
+
+=================  For SSl configration follow this one link ======================================================================
+https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-18-04
+
+sudo certbot --nginx -d domain.com -d www.domain.com
+
+Second: I configured my app to force SSL by adding the following to production.rb
+run this command to automation renewal ssl
+c
+
+config.force_ssl = true
+==========================================================================
+
+================= Normal command for Rails app deployment ===================================
+
+1- RAILS_ENV=production bundle install
+2- RAILS_ENV=production bundle exec rake db:create
+3- RAILS_ENV=production bundle exec rake db:migrate
+3- RAILS_ENV=production bundle exec rake db:migrate
+======================================================================
+=========== Web pack install for node modules in case if are missings ======
+4- yarn insatll
+=====================================================================
