@@ -1,0 +1,43 @@
+require 'rubygems'
+require 'zip'
+
+namespace :db_backup do
+  desc "DB Backup every 2 hours"
+  task backup: :environment do
+    puts 'Database backup'
+    
+    db_name = "db_name"
+    system 'mongodump --db ' + db_name
+    datestamp = Time.now.strftime("%Y-%m-%d_%H-%M-%S")
+    path = Rails.root.to_s + "/dump"
+    fils_path = Rails.root.to_s + "/dump/" + db_name
+    upload_path = "/#{datestamp}.zip"
+    archive = path + upload_path
+
+    Zip::File.open( archive, Zip::File::CREATE ) do |zip_file|
+
+      Dir[ File.join( fils_path, "**", "**" ) ].each do |file|
+        zip_file.add( file.sub( "#{ fils_path }/", "" ), file )
+      end
+    end
+    system 'rm -rf dump/' + db_name
+
+    upload_path_file = Dir.glob('dump/' + datestamp + '.zip').last
+
+    s3 = Aws::S3::Resource.new(
+        :region => 'af-south-1',
+        :access_key_id => 'access_key',
+        :secret_access_key => 'secret_key'
+      )
+
+    object = s3.bucket('fbucket.name').object(upload_path_file.gsub('dump/', ''))
+
+    if object.upload_file(upload_path_file)
+      # system 'rm -rf ' + upload_path_file
+    end
+    object.public_url
+
+    puts "url: #{object.public_url}"
+  end
+
+end
