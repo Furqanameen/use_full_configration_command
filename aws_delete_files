@@ -1,0 +1,30 @@
+namespace :monthly_wise do
+  desc "DB Backup Delete 11 slot keep one last"
+  task single_record: :environment do
+
+    datestamp = Time.now.strftime("%Y-%m-%d_%H-%M-%S")
+    # Dir.glob('dump/**.zip').select {|f| f.gsub('dump/','') >= "2021-08-23_18-40-00.zip"}
+    # (Date.today - 30.days).strftime("%Y-%m-%d_%H-%M-%S")
+    time_diff = (Date.today - 31.days)
+    
+    start_time_of_day = time_diff.beginning_of_day.strftime("%Y-%m-%d_%H-%M-%S")
+    end_time_of_day = time_diff.end_of_day.strftime("%Y-%m-%d_%H-%M-%S")
+
+    # back_up_record = Dir.glob('dump/**.zip').select {|f| f.gsub('dump/','') >= start_time_of_day and f.gsub('dump/','') <= end_time_of_day}.first(11)
+    s3 = Aws::S3::Resource.new(
+        :region => 'af-south-1',
+        :access_key_id => 'access_keys',
+        :secret_access_key => 'secret_key'
+      )
+    bucket = s3.bucket('bucket.name')
+
+    record_older_one_month = bucket.objects.select {|f| f.key >= start_time_of_day and f.key <= end_time_of_day}.first(11)
+
+    if record_older_one_month.any?
+      record_older_one_month.each do |rec|
+        rec.delete
+      end
+    end
+  end
+
+end
