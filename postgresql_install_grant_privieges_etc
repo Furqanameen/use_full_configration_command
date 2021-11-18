@@ -2,6 +2,18 @@
 
 sudo apt update
 sudo apt install postgresql postgresql-contrib
+
+Ubuntu: Fix "An error occurred while installing pg"
+If you get an error like this:
+
+An error occurred while installing pg (0.17.1), and Bundler cannot continue.
+Make sure that gem install pg -v '0.17.1' succeeds before bundling.
+
+Then do this:
+
+sudo apt-get install libpq-dev
+... and run Bundler again.
+
 Now postgresql installed for creating new user or changeing role etc folow below structure 
 sudo -u postgres psql
 CREATE DATABASE yourdbname;
