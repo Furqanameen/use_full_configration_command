@@ -1,0 +1,88 @@
+  
+    2  sudo nano ~/.ssh/authorized_keys
+
+    6  curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+    7  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+    8  echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    9  sudo add-apt-repository ppa:chris-lea/redis-server
+   10  sudo apt-get update
+   11  sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common libffi-dev dirmngr gnupg apt-transport-https ca-certificates redis-server redis-tools nodejs yarn
+   12  gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+   13  gpg --keyserver keyserver.ubuntu.com --recv-key 908F435E
+   14  \curl -sSL https://get.rvm.io | bash
+   15  source /home/deploy/.rvm/scripts/rvm
+   16  rvm current
+   17  rvm list
+   18  rvm 
+   19  rvm install 2.6.1
+   20  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
+   21  sudo sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger focal main > /etc/apt/sources.list.d/passenger.list'
+   22  sudo apt-get update
+   23  sudo apt-get install -y nginx-extras libnginx-mod-http-passenger
+   24  if [ ! -f /etc/nginx/modules-enabled/50-mod-http-passenger.conf ]; then sudo ln -s /usr/share/nginx/modules-available/mod-http-passenger.load /etc/nginx/modules-enabled/50-mod-http-passenger.conf ; fi
+   25  sudo ls /etc/nginx/conf.d/mod-http-passenger.conf
+   26  sudo service nginx start
+   27  sudo apt-get install postgresql postgresql-contrib libpq-dev
+   28  sudo su - postgres
+   29  sudo service nginx status
+   30  cd /var/www/
+   31  ls
+   32  ls -ahl
+   33  git clone https://github.com/Furqanameen/hpg_repair_garage.git
+   34  sudo git clone https://github.com/Furqanameen/hpg_repair_garage.git
+   35  ls -ahl
+   36  cd hpg_repair_garage/
+   37  ls
+   38  gem update bundler
+
+   45  bundle install
+
+   48  sudo nano config/database.yml
+   49  RAILS_ENV=production rails db:create db:migrate db:seed
+   50  gem wrappers ruby
+   52  gem wrappers show ruby
+   53  sudo nano /etc/nginx/conf.d/mod-http-passenger.conf 
+   54  git branch
+   55  sudo git pull origin master
+   56  bundle install
+   
+   64  rails credentials:edit
+   65  EDITOR="mate --wait" bin/rails credentials:edit
+
+   82  RAILS_ENV=production rails db:create db:migrate db:seed
+   83  cd /etc/nginx/sites-enabled/
+   84  ls
+   85  sudo nano default 
+   86  cd /var/www/hpg_repair_garage/
+   87  pwd
+   88  cd /etc/nginx/sites-enabled/
+   89  sudo nano default 
+   90  cd /var/www/hpg_repair_garage/
+   91  RAILS_ENV=production rails assets:precompile
+   92  sudo service nginx restart
+   93  cd /var/www/hpg_repair_garage/
+   94  cd /etc/nginx/sites-enabled/
+   95  sudo nginx -t
+
+  128  RAILS_ENV=produciton rails assets:precompile
+
+  133  rails
+  134  RAILS_ENV=production rails assets:clean
+
+  136  RAILS_ENV=production rails assets:precompile
+  137  sudo service nginx restart 
+
+  150  passenger-config 
+  151  passenger-config restart-app
+  152  passenger-config list-instances
+
+  173  sudo chown -R deploy:deploy www/*
+
+  194  sudo snap install core; sudo snap refresh core
+  195  sudo snap install --classic certbot
+  196  sudo ln -s /snap/bin/certbot /usr/bin/certbot
+  197  sudo certbot --nginx
+  198  cd /etc/nginx/sites-enabled/
+  199  ls
+  200  sudo nano default 
+  201  sudo certbot --nginx
