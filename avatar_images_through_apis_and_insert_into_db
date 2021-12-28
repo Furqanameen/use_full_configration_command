@@ -1,0 +1,32 @@
+module UserConcern
+  extend ActiveSupport::Concern
+  require 'net/http'
+  require "uri"
+  require "openssl"
+  require 'json'
+  require 'open-uri'
+  require 'digest/md5'
+
+  def get_image_from_api
+
+    url = 'https://www.avatarapi.com/avatar.asmx/GetProfile?email='+ self.email + '&username=furqan&password=furqan635'
+    encoded_uri = URI::encode(url)
+    response = HTTParty.get(encoded_uri)
+    name_email = response["profile"]["Name"]
+    image = response["profile"]["Image"]
+
+    downloaded_file = open(image)
+    self.avatar.attach(io: downloaded_file, filename: self.username + ".png")
+  end
+
+  def get_gravatar_image_api
+    hash = Digest::MD5.hexdigest(self.email)
+     
+    # compile URL which can be used in <img src="RIGHT_HERE"...
+    image_src = "https://www.gravatar.com/avatar/#{hash}"
+
+    downloaded_file = open(image_src)
+    self.avatar.attach(io: downloaded_file, filename: self.username + ".png")
+    
+  end
+end
