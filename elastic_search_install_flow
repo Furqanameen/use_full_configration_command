@@ -14,17 +14,26 @@ sudo apt install elasticsearch
 
 Start the Elasticsearch service with systemctl. Give Elasticsearch a few moments to start up. Otherwise, you may get errors about not being able to connect.
 
-sudo systemctl start elasticsearch
-Next, run the following command to enable Elasticsearch to start up every time your server boots:
-
+sudo nano /etc/elasticsearch/elasticsearch.yml No need to update this file.
 sudo systemctl enable elasticsearch
+sudo /bin/systemctl daemon-reload
+sudo systemctl start elasticsearch
+systemctl status elasticsearch.service
+Next, run the following command to enable Elasticsearch to start up every time your server boots:
 
 Step 4 — Testing Elasticsearch
 By now, Elasticsearch should be running on port 9200. You can test it with cURL and a GET request.
 
 curl -X GET 'http://localhost:9200'
+if its working fine then congrate!..
+
+Next to check 
+open rails console and create index 
+Product.import force: true
+to check index run this command curl -X GET 'http://localhost:9200/_cat/indices'
 
 
+for delete index
 Product.__elasticsearch__.delete_index! for index deletion.
 Product.import force: true index creation.
 sudo systemctl start elasticsearch.service  elastic search service start.
