@@ -37,3 +37,13 @@ for delete index
 Product.__elasticsearch__.delete_index! for index deletion.
 Product.import force: true index creation.
 sudo systemctl start elasticsearch.service  elastic search service start.
+
+========================================= Tested quries ==============================================
+curl -XPOST -H "Content-Type: application/json" 'http://localhost:9200/tutorial/helloworld/1' -d '{ "message": "Hello World!" }'
+
+curl -X GET -H "Content-Type: application/json" 'http://localhost:9200/tutorial/helloworld/1?pretty'
+curl -X GET -H "Content-Type: application/json" 'http://localhost:9200/locations/wyoming/31?pretty'
+curl -X GET -H "Content-Type: application/json" 'http://localhost:9200/locations/_search?pretty' -d '{"query": {"match_all": {"_name": "ore"}}}'
+curl -X GET -H "Content-Type: application/json" 'http://localhost:9200/locations/_search?pretty' -d '{"query": {"match_all": {}}}'
+
+
