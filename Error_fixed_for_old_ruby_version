@@ -7,3 +7,33 @@ sudo nano /etc/apt/sources.list
 add deb http://security.ubuntu.com/ubuntu bionic-security main
 sudo apt update && apt-cache policy libssl1.0-dev
 sudo apt-get install libssl1.0-dev
+
+=================if you are getting like below issue then run those commands ===============
+Updating systemThere has been an error while updating your system using `apt-get`.
+It seems that there are some 404 Not Found errors for repositories listed in:
+
+    /etc/apt/sources.list
+    /etc/apt/sources.list.d/*.list
+
+Make sure that all repositories are available from your system and verify your setup by running manually:
+
+    sudo apt-get update
+
+Make sure that it works correctly before proceeding with RVM.
+
+If you are working from the GUI instead of the terminal, you might want to verify and fix broken
+repositories using "Software & Updates" application.
+
+........
+Error running 'requirements_debian_update_system ruby-2.5.1',
+please read /home/algo/.rvm/log/1652712015_ruby-2.5.1/update_system.log
+Requirements installation failed with status: 100.
+
+
+answer: 
+
+# Disable RVM from trying to install necessary software via apt-get
+rvm autolibs disable
+
+# Then try installing Ruby:
+rvm install 2.4.0
