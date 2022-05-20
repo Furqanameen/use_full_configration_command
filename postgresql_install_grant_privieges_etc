@@ -20,11 +20,15 @@ CREATE DATABASE yourdbname;
 CREATE USER youruser WITH ENCRYPTED PASSWORD 'yourpass';
 GRANT ALL PRIVILEGES ON DATABASE yourdbname TO youruser;
 
-================================================================== Simple WAY TO CREATE SUPER USER AND GRANT PRIVILAGES ETC  ==================================================================
-CREATE ROLE instalane WITH SUPERUSER CREATEDB CREATEROLE LOGIN ENCRYPTED PASSWORD 'pass_instalane';
-ALTER ROLE instalane PASSWORD 'pass_instalane';
-GRANT CONNECT ON DATABASE my_db TO my_user;
+========================= Simple WAY TO CREATE SUPER USER AND GRANT PRIVILAGES ETC ====================================================
+https://linuxhint.com/postgresql_installation_guide_ubuntu_20-04/
 
+# sudo su - postgres
+# CREATE DATABASE Protekt_LMS_Admin_development;
+# CREATE USER algo WITH PASSWORD 'algo';
+# GRANT ALL PRIVILEGES ON DATABASE "protekt_lms_admin_development" to algo;
+# ALTER USER "algo" with superuser;
+# ALTER USER algo WITH  LOGIN;
 =================================================================             ==========================================================================
 
 To make a user a SuperUser: ALTER USER username WITH SUPERUSER;
