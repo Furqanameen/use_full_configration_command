@@ -12,13 +12,6 @@ Make sure that gem install pg -v '0.17.1' succeeds before bundling.
 Then do this:
 
 sudo apt-get install libpq-dev
-... and run Bundler again.
-
-Now postgresql installed for creating new user or changeing role etc folow below structure 
-sudo -u postgres psql
-CREATE DATABASE yourdbname;
-CREATE USER youruser WITH ENCRYPTED PASSWORD 'yourpass';
-GRANT ALL PRIVILEGES ON DATABASE yourdbname TO youruser;
 
 ========================= Simple WAY TO CREATE SUPER USER AND GRANT PRIVILAGES ETC ====================================================
 https://linuxhint.com/postgresql_installation_guide_ubuntu_20-04/
@@ -29,6 +22,29 @@ https://linuxhint.com/postgresql_installation_guide_ubuntu_20-04/
 # GRANT ALL PRIVILEGES ON DATABASE "protekt_lms_admin_development" to algo;
 # ALTER USER "algo" with superuser;
 # ALTER USER algo WITH  LOGIN;
+
+=========================DATABASE.YML ============================
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: waleed
+  password: waleed
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: solar_development_pro
+
+test:
+  <<: *default
+  database: solar-test
+
+production:
+  <<: *default
+  database: solar-production
+  username: solar
+  password: solar
+
 =================================================================             ==========================================================================
 
 To make a user a SuperUser: ALTER USER username WITH SUPERUSER;
