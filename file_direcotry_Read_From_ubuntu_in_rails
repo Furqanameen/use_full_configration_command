@@ -1,0 +1,10 @@
+directory = "/home/deploy/Uploaded_Movies/all_images"
+imgs = Dir.entries(directory).reject{|ind| ind.length<3}
+
+videos = Video.all
+i = 0
+videos.each do |video|
+  video.image.attach(io: File.open(directory + "/" + imgs[i]), filename: imgs[i])
+  i = i + 1
+  puts "Worked and updated image:::  #{video.id}"
+end
