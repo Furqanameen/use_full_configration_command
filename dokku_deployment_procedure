@@ -1,0 +1,135 @@
+After dokku instalation => echo <public_key> | sudo dokku ssh-keys:add dokku 
+or on local = >. cat ~/.ssh/id_rsa.pub | ssh root@dokku.me dokku ssh-keys:add KEY_NAME
+We can also added throgh the direct IP from the UI 
+
+dokku postgres:create dummy-dokku-db
+
+dokku postgres:link dummy-dokku-db dummydokku
+
+dokku redis:create dummydokku-redis
+
+dokku redis:link dummydokku-redis dummydokku
+
+git remote add dokku dokku@64.227.40.2:dummydokku
+
+dokku postgres:connect dummy-dokku-db
+
+dokku config:set dummydokku RAILS_ENV=production
+
+dokku config:set dummydokku RAILS_MASTER_KEY=3318a3b89f124e1afb101f83f612f0fb96363b62da0a2b66c9f069fd38696e4ee4ba1b0bfe4c9d85b71a59a9fa38669a6e034588f10a4c6882c3dab8464a3039
+
+dokku config:unset appname VAR1
+
+dokku ps:start --all --parallel -1
+
+dokku config:unset appname VAR1
+
+Delete all environment variable for a specific application
+
+To delete all your environment variables for a specific application we can use the config:clear command.
+
+dokku config:clear appname
+
+Clear all global enironment variables
+
+To delete all global environment variables we can use the --global flag.
+
+dokku config:clear --global
+
+dokku run dummydokku bundle  exec rake db:migrate db:seed RAILS_ENV=production
+
+dokku run dummydokku bundle exec rails console
+
+To set domain 
+
+http://furqantest.phillipsonhardwickadvisory.co.uk/
+
+dokku domains:add dummydokku furqantest.phillipsonhardwickadvisory.co.uk
+
+dokku domains:set dummydokku furqantest.phillipsonhardwickadvisory.co.uk
+
+====================================================================================================
+
+dokku postgres:create chase-db
+
+dokku postgres:link chase-db chaseapp
+
+dokku redis:create chase-redis
+
+dokku redis:link chase-redis chaseapp
+
+git remote add dokku dokku@64.227.40.2:chaseapp
+
+dokku postgres:connect chase-db
+
+dokku config:set chaseapp RAILS_ENV=production
+
+dokku config:set chaseapp RAILS_MASTER_KEY=3318a3b89f124e1afb101f83f612f0fb96363b62da0a2b66c9f069fd38696e4ee4ba1b0bfe4c9d85b71a59a9fa38669a6e034588f10a4c6882c3dab8464a3039
+
+dokku config:unset chaseapp VAR1
+
+dokku domains:add chaseapp 64.227.40.2
+
+dokku domains:set chaseapp 64.227.40.2
+=======================================================================================================
+  152  dokku help
+
+  153  dokku nginx:
+
+  154  dokku nginx:help
+
+  155  dokku nginx:access-logs
+
+  156  dokku nginx:access-logs dummydokku
+
+  157  dokku nginx:error-logs dummydokku
+
+  158  dokku nginx:validate-config dummdokku --clean
+
+  159  dokku nginx:error-logs dummydokku --clean
+
+  160  dokku nginx:set dummydokku
+
+  161  dokku nginx:show-config dummydokku
+
+  162  dokku nginx:help
+
+  163  dokku nginx:access-logs dummydokku -t
+
+  164  dokku nginx:error-logs dummydokku -t
+
+  165  dokku urls dummydokku
+
+  166  cat /home/dokku/VHOST
+
+  167  dokku domain dummydokku
+
+  168  dokku domains dummydokku
+
+  169  dokku domains:clear
+
+  170  dokku domains:clear dummydokku
+
+  171  dokku nginx:
+
+  172  dokku nginx:help
+
+  173  dokku nginx:show-config
+
+  174  dokku nginx:show-config dummydokku
+
+  175  dokku domains:clear
+
+  176  dokku domains:help
+
+  177  dokku domains:add dummydokku furqantest.phillipsonhardwickadvisory.co.uk
+
+  178  dokku domains:set dummydokku furqantest.phillipsonhardwickadvisory.co.uk
+
+  179  dokku nginx:show-config
+
+  180  dokku nginx:show-config dummydokku
+
+  181  dokku logs -t dummydokku
+
+  182  dokku apps:lis
